@@ -1,0 +1,32 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+#pragma kernel Offset
+
+RWTexture2D<float2> Previous;
+RWTexture2D<float2> Result;
+
+int resolution;
+float2 playerPosition;
+float2 offset;
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID) // DispatchThreadID = pixel coord in our case
+{
+    float2 uv = (float2(id.xy) / resolution) - 0.5;
+    
+    float d = distance(uv, playerPosition);
+    
+    float2 previous = Previous[id.xy];
+    
+    float mask = smoothstep(0.1, 0.05, d);
+    
+    Result[id.xy] = lerp(float2(mask, 0.0), previous, 0.99);
+}
+
+[numthreads(8,8,1)]
+void Offset(uint3 id : SV_DispatchThreadID) // DispatchThreadID = pixel coord in our case
+{
+    int2 ioffset = (int2)offset;
+    
+    Result[id.xy] = Previous[id.xy + ioffset];
+}
