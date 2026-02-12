@@ -1267,6 +1267,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2144953072}
   - component: {fileID: 2144953071}
+  - component: {fileID: 2144953073}
   m_Layer: 0
   m_Name: Simulation
   m_TagString: Untagged
@@ -1286,13 +1287,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b374096b0854c4293acdd47a2d5f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Simulation
+  EffectThingy: {fileID: 36624707}
   PlayerTransform: {fileID: 1762682262}
-  StepSize: 0.5
-  SimulationResolution: 32
-  PreviewDistance: 0.5
+  StepSize: 0.15
+  PreviewDistance: 0.1
+  ForceBuffer: {fileID: 8400000, guid: e61d33aa54415a04caf6ace31e9da677, type: 2}
+  VelocityBuffer: {fileID: 8400000, guid: b6d253b97b14bcf4ca7ab248dd0b6a80, type: 2}
+  InjectionShader: {fileID: 4800000, guid: ae8ec69a42aab44e58c38501811bda46, type: 3}
+  OffsetCompute: {fileID: 7200000, guid: d64b989ff86b2b14c9351c8cbdb2fe7a, type: 3}
   PreviewQuadTransform: {fileID: 589264874}
   PreviewQuadMeshRenderer: {fileID: 589264876}
-  SimulationComputeShader: {fileID: 7200000, guid: 206df34cf23e7924696913228a71e860, type: 3}
 --- !u!4 &2144953072
 Transform:
   m_ObjectHideFlags: 0
@@ -1309,6 +1313,23 @@ Transform:
   - {fileID: 589264874}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2144953073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144953070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85b516f15ac844ca9bbe5c5dbd932e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StableFluids.Marbling.MarblingFluidSimulator
+  <Viscosity>k__BackingField: 0.000001
+  useUpdate: 0
+  _velocityField: {fileID: 8400000, guid: b6d253b97b14bcf4ca7ab248dd0b6a80, type: 2}
+  _forceField: {fileID: 8400000, guid: e61d33aa54415a04caf6ace31e9da677, type: 2}
+  _kernelShader: {fileID: 4800000, guid: 636ac93388c5343c894f80bf0fc605f2, type: 3}
 --- !u!1 &2114283753834967212
 GameObject:
   m_ObjectHideFlags: 0

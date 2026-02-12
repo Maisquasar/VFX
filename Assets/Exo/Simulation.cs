@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using StableFluids.Marbling;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Simulation : MonoBehaviour
 {
+    public VisualEffect EffectThingy;
     public Transform PlayerTransform;
     public float StepSize = 0.5f;
     public float PreviewDistance = 1f;
@@ -119,6 +122,10 @@ public class Simulation : MonoBehaviour
         
         previousSnappedPosition = snappedPosition;
         previousPosition = PlayerTransform.position;
+
+        EffectThingy.SetVector3(Shader.PropertyToID("SimulationCenter"), PlayerTransform.position);
+        EffectThingy.SetVector3(Shader.PropertyToID("ScaleFactor"), new Vector3(scale, scale, scale)*0.5f);
+        //EffectThingy.SetTexture(Shader.PropertyToID("_OffsetSource"), VelocityBuffer);
     }
 
     private void OffsetBuffer(RenderTexture inputBuffer, int numX, Vector2 texelOffset)
