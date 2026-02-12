@@ -15,7 +15,6 @@ public class Simulation : MonoBehaviour
     
     private RenderTexture tempCopy;
     
-    
     public Shader InjectionShader;
     private Material injectionMaterial;
 
@@ -73,17 +72,17 @@ public class Simulation : MonoBehaviour
         PreviewQuadTransform.position = snappedPosition + Vector3.up * PreviewDistance;
         PreviewQuadTransform.localScale = new Vector3(scale, scale, scale);
 
-        Vector2 texelOffset = new Vector2Int(
-            (int)((snappedPosition.x - previousSnappedPosition.x) / StepSize),
-            (int)((snappedPosition.z - previousSnappedPosition.z) / StepSize)
+        Vector2Int texelOffset = new Vector2Int(
+            Mathf.RoundToInt((snappedPosition.x - previousSnappedPosition.x) / StepSize),
+            Mathf.RoundToInt((snappedPosition.z - previousSnappedPosition.z) / StepSize)
         );
         int numX = (int)simulationResolution / 8;
         
         // Offset (Only velocity)
         OffsetBuffer(VelocityBuffer, numX, texelOffset);
-        OffsetBuffer(MarblingSimulator.Simulation.v1, numX, texelOffset);
-        OffsetBuffer(MarblingSimulator.Simulation.p1, numX, texelOffset);
-        OffsetBuffer(MarblingSimulator.Simulation.p2, numX, texelOffset);
+        // OffsetBuffer(MarblingSimulator.Simulation.v1, numX, texelOffset);
+        // OffsetBuffer(MarblingSimulator.Simulation.p1, numX, texelOffset);
+        // OffsetBuffer(MarblingSimulator.Simulation.p2, numX, texelOffset);
         
         // Injection
         Vector2 simPos = WorldToSim(PlayerTransform.position, snappedPosition, scale);

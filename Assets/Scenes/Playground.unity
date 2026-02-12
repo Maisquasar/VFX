@@ -1122,6 +1122,7 @@ MonoBehaviour:
   OffsetCompute: {fileID: 7200000, guid: d64b989ff86b2b14c9351c8cbdb2fe7a, type: 3}
   PreviewQuadTransform: {fileID: 589264874}
   PreviewQuadMeshRenderer: {fileID: 589264876}
+  DebugPatternCompute: {fileID: 7200000, guid: 32a4620d45efc1a43bf23368d325bca6, type: 3}
 --- !u!4 &2144953072
 Transform:
   m_ObjectHideFlags: 0
@@ -1151,6 +1152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StableFluids.Marbling.MarblingFluidSimulator
   <Viscosity>k__BackingField: 0.000001
+  useUpdate: 0
   _velocityField: {fileID: 8400000, guid: b6d253b97b14bcf4ca7ab248dd0b6a80, type: 2}
   _forceField: {fileID: 8400000, guid: e61d33aa54415a04caf6ace31e9da677, type: 2}
   _kernelShader: {fileID: 4800000, guid: 636ac93388c5343c894f80bf0fc605f2, type: 3}

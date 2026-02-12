@@ -7,6 +7,7 @@ public sealed class MarblingFluidSimulator : MonoBehaviour
     #region Public properties
 
     [field:SerializeField] public float Viscosity { get; set; } = 1e-6f;
+    public bool useUpdate = false;
 
     #endregion
 
@@ -42,6 +43,13 @@ public sealed class MarblingFluidSimulator : MonoBehaviour
     {
         _simulation.Dispose();
         _simulation = null;
+    }
+
+    void Update()
+    {
+        if (!useUpdate)
+            return;
+        UpdateSimulation();
     }
 
     public void UpdateSimulation()
