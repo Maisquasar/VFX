@@ -46,6 +46,7 @@ ENDHLSL
     SubShader
     {
         Cull Off ZWrite Off ZTest Always
+        Blend One One
 
         // Pass 0: Color Injection
         Pass

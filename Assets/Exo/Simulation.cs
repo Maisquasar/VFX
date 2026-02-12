@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using StableFluids.Marbling;
 using UnityEngine;
 
 public class Simulation : MonoBehaviour
 {
-    
     public Transform PlayerTransform;
     public float StepSize = 0.5f;
     public float PreviewDistance = 1f;
@@ -97,6 +97,19 @@ public class Simulation : MonoBehaviour
             injectionMaterial.SetVector("_Force", simVel);
             Graphics.Blit(null, ForceBuffer, injectionMaterial, 1);
         }
+        
+        for (int i = 0; i < influencers.Count; i++)
+        {
+            Vector2 simPosI = WorldToSim(influencers[i].transform.position, snappedPosition, scale);
+            Vector2 simVelI = VelocityWorldToSim(influencers[i].transform.position, influencers[i].prevPosition, snappedPosition, scale);
+            
+            injectionMaterial.SetVector("_Origin", simPosI);
+            injectionMaterial.SetFloat("_Falloff", 200f);
+            injectionMaterial.SetVector("_Force", simVelI);
+            Graphics.Blit(null, ForceBuffer, injectionMaterial, 1);
+
+            influencers[i].prevPosition = influencers[i].transform.position;
+        }
 
         // Simulation
         MarblingSimulator.UpdateSimulation();
@@ -106,8 +119,6 @@ public class Simulation : MonoBehaviour
         
         previousSnappedPosition = snappedPosition;
         previousPosition = PlayerTransform.position;
-        
-        // flip = !flip;
     }
 
     private void OffsetBuffer(RenderTexture inputBuffer, int numX, Vector2 texelOffset)
@@ -123,5 +134,20 @@ public class Simulation : MonoBehaviour
     private Vector3 SnapPosition(Vector3 pos)
     {
         return new Vector3(pos.x - (pos.x % StepSize), pos.y, pos.z - (pos.z % StepSize));
+    }
+
+    private List<Influencer> influencers = new List<Influencer>();
+
+    public void AddInfluencer(Influencer influencer)
+    {
+        Debug.Assert(!influencers.Contains(influencer));
+        influencer.prevPosition = influencer.transform.position;
+        influencers.Add(influencer);
+    }
+
+    public void RemoveInfluencer(Influencer influencer)
+    {
+        Debug.Assert(influencers.Contains(influencer));
+        influencers.Remove(influencer);
     }
 }
