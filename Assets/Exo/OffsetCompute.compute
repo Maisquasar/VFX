@@ -1,0 +1,12 @@
+#pragma kernel CSMain
+
+float2 offset;
+Texture2D<float2> Previous;
+RWTexture2D<float2> Result;
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    int2 coord = int2(id.xy) + int2(offset);
+    Result[id.xy] = Previous[coord];
+}
