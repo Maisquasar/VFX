@@ -107,8 +107,8 @@ public class Simulation : MonoBehaviour
             Vector2 simVelI = VelocityWorldToSim(influencers[i].transform.position, influencers[i].prevPosition, snappedPosition, scale);
             
             injectionMaterial.SetVector("_Origin", simPosI);
-            injectionMaterial.SetFloat("_Falloff", 200f);
-            injectionMaterial.SetVector("_Force", simVelI);
+            injectionMaterial.SetFloat("_Falloff", 500f);
+            injectionMaterial.SetVector("_Force", simVelI*8);
             Graphics.Blit(null, ForceBuffer, injectionMaterial, 1);
 
             influencers[i].prevPosition = influencers[i].transform.position;
@@ -124,7 +124,9 @@ public class Simulation : MonoBehaviour
         previousPosition = PlayerTransform.position;
 
         EffectThingy.SetVector3(Shader.PropertyToID("SimulationCenter"), PlayerTransform.position);
-        EffectThingy.SetVector3(Shader.PropertyToID("ScaleFactor"), new Vector3(scale, scale, scale)*0.5f);
+        EffectThingy.SetVector3(Shader.PropertyToID("ScaleFactor"), new Vector3(scale, scale, scale));
+        float playerHeight = Math.Clamp(1 - Math.Abs(PlayerTransform.position.y), 0, 1);
+        EffectThingy.SetFloat(Shader.PropertyToID("PlayerHeight"), playerHeight);
         //EffectThingy.SetTexture(Shader.PropertyToID("_OffsetSource"), VelocityBuffer);
     }
 
